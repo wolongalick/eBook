@@ -11,6 +11,7 @@ import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.text.format.Time;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,14 +21,12 @@ import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.Toast;
 
-
 import com.ebook.model.Book;
 import com.ebook.model.BookLab;
-import com.ebook.util.ScreenBrightnessHelper;
+import com.ebook.util.SaveHelper;
 import com.ebook.util.bookPageUtil.BookPageFactory;
 import com.ebook.util.bookPageUtil.Label;
 import com.ebook.util.bookPageUtil.ReadInfo;
-import com.ebook.util.SaveHelper;
 import com.ebook.view.FlipView;
 import com.ebook.view.popupWindow.ContentPopup;
 import com.ebook.view.popupWindow.FontPopup;
@@ -43,7 +42,8 @@ import java.util.List;
 
 public class ReadingFragment extends Fragment implements View.OnClickListener {
     public static final String ARG_FLIP_BOOK_ID = "ARG_FLIP_BOOK_ID ";
-    public static final int TEXT_SIZE_DELTA = 50;
+    public static final int TEXT_SIZE_DELTA     = 50;
+    private static final String TAG             = "ReadingFragment";
 
     private Context mContext;
     private int mBookId;
@@ -233,7 +233,7 @@ public class ReadingFragment extends Fragment implements View.OnClickListener {
             @Override
             public List<Bitmap> onNextPageFlipped() {
                 //向后读一页
-
+                Log.i(TAG,"--->onNextPageFlipped()");
                 mNextPage = mBookPageFactory.drawNextPage(mPowerPercent);
 
                 if (mNextPage == null)
@@ -247,6 +247,7 @@ public class ReadingFragment extends Fragment implements View.OnClickListener {
 
             @Override
             public List<Bitmap> onPrePageFlipped() {
+                Log.i(TAG,"--->onPrePageFlipped()");
                 mPrePage = mBookPageFactory.drawPrePage(mPowerPercent);
                 if (mPrePage == null)
                     return null;
